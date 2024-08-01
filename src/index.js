@@ -1,8 +1,11 @@
-import { searchWord } from "../src/helpers/FindWord.js";
+const alphabetCheckRegex = /^[a-zA-Z]+$/;
 
-const wordGridCanvas = document.getElementById("wordGridCanvas");
-const wordGridCanvasContext = wordGridCanvas.getContext("2d");
-
-const wGrid = 400;
-const hGrid = 500;
-
+window.addEventListener('keydown', (event) => {
+    const pressedKey = event.key;
+   
+    console.log(typeof pressedKey);
+    
+    if (alphabetCheckRegex.test(pressedKey)) {
+        document.getElementById('1').innerHTML = pressedKey.toUpperCase();
+    }
+});
