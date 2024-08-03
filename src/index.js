@@ -4,6 +4,7 @@ const alphabetCheckRegex = /^[a-zA-Z]+$/;
 
 let currentWord = "";
 let currentSquare = 0;
+let currentRow = 0;
 let letterCount = 0;
 
 //CHAR ARRAY
@@ -23,17 +24,22 @@ window.addEventListener("keydown", (event) => {
   if (pressedKey == "Backspace" && currentSquare > 0) {
     removeLetterFromWord();
   }
-  if (pressedKey == "Enter" && letterCount === 5) {
+  if (pressedKey == "Enter" && letterCount === 5 && currentRow < 5) {
     console.log("Searching Word");
+    console.log(checkWordExists(currentWord));
     checkMatchingLetters(currentWord);
-    moveToNextRow();
+    if (checkMatchingLetters(currentWord).includes(0, 1)) {
+      moveToNextRow();
+    }
+    else {
+      console.log('CORRECT GUESS!!!!')
+    }
+    
   }
 });
 
-console.log(secretWord);
 
-
-
+//ADDS LETTER TO CURRENT WORD AND DISPLAYS IT AT THE CURRENT GRID SQUARE
 function appendLetterToWord(letter) {
   currentWord = currentWord.concat(letter);
   currentSquare++;
@@ -41,6 +47,7 @@ function appendLetterToWord(letter) {
   console.log(currentWord);
 }
 
+//DELETES LETTER 
 function removeLetterFromWord() {
   currentSquare--;
   document.getElementById(currentSquare.toString()).innerHTML = " ";
@@ -49,15 +56,19 @@ function removeLetterFromWord() {
   console.log(currentWord);
 }
 
+//MOVES GAME TO THE NEXT ROW 
 function moveToNextRow() {
   currentWord = "";
   letterCount = 0;
+  currentRow++;
 }
 
-//CHECKS USER INPUT AGAINST THE SECRETWORD -> {MATCHED LETTERS AND INDEX}
+/*CHECKS USER INPUT AGAINST THE SECRETWORD -> RETUNRNS ARRAY 
+0 - NOT A LETTER IN THE WORD
+1 - LETTER IN THE WORD , NOT IN CORRECT POSITION  
+2 - LETTER IN CORRECT POSITION 
+*/
 function checkMatchingLetters(currentWord) {
-  let x = 0;
-  let y = 0;
   let userAnswerMatch = [];
 
   const wordMap = secretWord.map((l, index) => {
@@ -86,7 +97,8 @@ function checkMatchingLetters(currentWord) {
   }
 
 
-  console.log(userAnswerMatch);
+  return userAnswerMatch;
   
 
 }
+
