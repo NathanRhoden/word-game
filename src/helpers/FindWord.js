@@ -1,3 +1,5 @@
+import { words } from './Words.js';
+
 const url = 'https://api.dictionaryapi.dev/api/v2/entries/en/'
 
 async function searchWord(word) {
@@ -18,8 +20,14 @@ async function searchWord(word) {
     }
 }
 
+//FETCHES WORD FROM LIST -> CHAR ARRAY OF WORD
+function chooseWord() {
+    let word = words[Math.floor(Math.random() * (11513))].toUpperCase();
+
+    return word.split("");
+    
+}
 
 
-
-export { searchWord };
+export { searchWord , chooseWord }
 
