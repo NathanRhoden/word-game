@@ -1,6 +1,7 @@
-async function searchWord(word) {
-    const url = 'https://api.dictionaryapi.dev/api/v2/entries/en/'
+const url = 'https://api.dictionaryapi.dev/api/v2/entries/en/'
 
+async function searchWord(word) {
+    
     try {
         const response = await fetch(url + word); 
         
@@ -9,7 +10,7 @@ async function searchWord(word) {
         }
 
         const json = await response.json();
-        console.log(json);
+        return json
     
     }
     catch (err) {
@@ -17,4 +18,8 @@ async function searchWord(word) {
     }
 }
 
-export {searchWord}
+
+
+
+export { searchWord };
+
