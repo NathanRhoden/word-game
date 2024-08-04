@@ -10,39 +10,41 @@ let letterCount = 0;
 //CHAR ARRAY
 let secretWord = chooseWord();
 
-window.addEventListener("keydown", (event) => {
-  const pressedKey = event.key;
+window.addEventListener("keydown", handleKeyPress);
 
-  if (letterCount < 5) {
-    if (alphabetCheckRegex.test(pressedKey) && pressedKey.length === 1) {
-      document.getElementById(currentSquare.toString()).innerHTML =
-        pressedKey.toUpperCase();
+//TO-DO FOR CLEAN UP
+function handleKeyPress(event) {
 
-      appendLetterToWord(pressedKey.toUpperCase());
+  const keyPress = event.key
+
+  if (isAlphabet(keyPress) && letterCount < 5 && gameRunning()) {
+
+    addLetterToGrid(currentSquare , keyPress)
+    
+    appendLetterToWord(keyPress);
+  }
+  else if (keyPress == "Backspace") {
+    if (currentSquare > 0 && letterCount > 0 && gameRunning()){
+      removeLetterFromWord();
     }
   }
-  if (pressedKey == "Backspace" && currentSquare > 0) {
-    removeLetterFromWord();
-  }
-  if (pressedKey == "Enter" && letterCount === 5 && currentRow < 5) {
+  else if (keyPress == "Enter" && letterCount === 5 && currentRow <= 5 && gameRunning()) {
     console.log("Searching Word");
-    console.log(checkWordExists(currentWord));
-    checkMatchingLetters(currentWord);
+    console.log(checkMatchingLetters(currentWord));
+    
     if (checkMatchingLetters(currentWord).includes(0, 1)) {
       moveToNextRow();
     }
     else {
       console.log('CORRECT GUESS!!!!')
     }
-    
   }
-});
-
+  
+}
 
 //ADDS LETTER TO CURRENT WORD AND DISPLAYS IT AT THE CURRENT GRID SQUARE
 function appendLetterToWord(letter) {
   currentWord = currentWord.concat(letter);
-  currentSquare++;
   letterCount++;
   console.log(currentWord);
 }
@@ -102,3 +104,17 @@ function checkMatchingLetters(currentWord) {
 
 }
 
+function isAlphabet(press) {
+  return alphabetCheckRegex.test(press) && press.length === 1
+}
+
+function addLetterToGrid(gridNumber , letter) {
+  document.getElementById(gridNumber).innerHTML =
+    letter.toUpperCase();
+    currentSquare++;
+}
+
+//IF ENTER HAS NOT BEEN HIT ON THE FINAL ROW -> TRUE
+function gameRunning(){
+  return currentRow < 6
+}
