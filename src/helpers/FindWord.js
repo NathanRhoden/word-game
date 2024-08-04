@@ -2,17 +2,21 @@ import { words } from './Words.js';
 
 const url = 'https://api.dictionaryapi.dev/api/v2/entries/en/'
 
+//SEARCHES FOR WORD IF WORD EXISTS RETURNS 200 IF NOT 404 WITH EMPTY ARRAY
 async function searchWord(word) {
     
     try {
         const response = await fetch(url + word); 
         
         if (!response.ok) {
-            throw new Error(`Response status: ${response.status}`);
+            return false;
+        }
+        else {
+            const json = await response.json();
+            return true; 
         }
 
-        const json = await response.json();
-        return json
+        
     
     }
     catch (err) {

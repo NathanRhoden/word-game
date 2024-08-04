@@ -14,42 +14,31 @@ window.addEventListener("keydown", handleKeyPress);
 
 //TO-DO FOR CLEAN UP
 function handleKeyPress(event) {
-
-  const keyPress = event.key
+  const keyPress = event.key;
 
   if (isAlphabet(keyPress) && letterCount < 5 && gameRunning()) {
+    addLetterToGrid(currentSquare, keyPress);
 
-    addLetterToGrid(currentSquare , keyPress)
-    
-    appendLetterToWord(keyPress);
+    addLetterToWord(keyPress);
   }
-  else if (keyPress == "Backspace") {
-    if (currentSquare > 0 && letterCount > 0 && gameRunning()){
+  if (keyPress == "Backspace") {
+    if (currentSquare > 0 && letterCount > 0 && gameRunning()) {
       removeLetterFromWord();
     }
   }
-  else if (keyPress == "Enter" && letterCount === 5 && currentRow <= 5 && gameRunning()) {
-    console.log("Searching Word");
-    console.log(checkMatchingLetters(currentWord));
-    
-    if (checkMatchingLetters(currentWord).includes(0, 1)) {
-      moveToNextRow();
-    }
-    else {
-      console.log('CORRECT GUESS!!!!')
-    }
+  if (keyPress == "Enter") {
+    enterKeyHandler();
   }
-  
 }
 
 //ADDS LETTER TO CURRENT WORD AND DISPLAYS IT AT THE CURRENT GRID SQUARE
-function appendLetterToWord(letter) {
-  currentWord = currentWord.concat(letter);
+function addLetterToWord(letter) {
+  currentWord = currentWord.concat(letter.toUpperCase());
   letterCount++;
   console.log(currentWord);
 }
 
-//DELETES LETTER 
+//DELETES LETTER
 function removeLetterFromWord() {
   currentSquare--;
   document.getElementById(currentSquare.toString()).innerHTML = " ";
@@ -58,7 +47,7 @@ function removeLetterFromWord() {
   console.log(currentWord);
 }
 
-//MOVES GAME TO THE NEXT ROW 
+//MOVES GAME TO THE NEXT ROW
 function moveToNextRow() {
   currentWord = "";
   letterCount = 0;
@@ -98,23 +87,35 @@ function checkMatchingLetters(currentWord) {
     }
   }
 
-
   return userAnswerMatch;
-  
-
 }
 
 function isAlphabet(press) {
-  return alphabetCheckRegex.test(press) && press.length === 1
+  return alphabetCheckRegex.test(press) && press.length === 1;
 }
 
-function addLetterToGrid(gridNumber , letter) {
-  document.getElementById(gridNumber).innerHTML =
-    letter.toUpperCase();
-    currentSquare++;
+function addLetterToGrid(gridNumber, letter) {
+  document.getElementById(gridNumber).innerHTML = letter.toUpperCase();
+  currentSquare++;
 }
 
 //IF ENTER HAS NOT BEEN HIT ON THE FINAL ROW -> TRUE
-function gameRunning(){
-  return currentRow < 6
+function gameRunning() {
+  return currentRow < 6;
+}
+
+function enterKeyHandler() {
+  if (letterCount === 5 && currentRow <= 5 && gameRunning()) {
+    console.log("Searching Word");
+    searchWord(currentWord).then((wordExists) => {
+      if (wordExists) {
+        if (checkMatchingLetters(currentWord).includes(0, 1)) {
+          console.log(checkMatchingLetters(currentWord));
+          moveToNextRow();
+        } else {
+          console.log("CORRECT GUESS!!!!");
+        }
+      }
+    });
+  }
 }
