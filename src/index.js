@@ -1,4 +1,5 @@
 import { searchWord, chooseWord } from "./helpers/FindWord.js";
+import { animateKeyDown , animateBackspace } from "./helpers/Animations.js"
 
 const alphabetCheckRegex = /^[a-zA-Z]+$/;
 
@@ -17,12 +18,14 @@ function handleKeyPress(event) {
   const keyPress = event.key;
 
   if (isAlphabet(keyPress) && letterCount < 5 && gameRunning()) {
+    animateKeyDown(currentSquare);
     addLetterToGrid(currentSquare, keyPress);
-
     addLetterToWord(keyPress);
+    
   }
   if (keyPress == "Backspace") {
     if (currentSquare > 0 && letterCount > 0 && gameRunning()) {
+      animateBackspace(currentSquare);
       removeLetterFromWord();
     }
   }
@@ -119,3 +122,4 @@ function enterKeyHandler() {
     });
   }
 }
+

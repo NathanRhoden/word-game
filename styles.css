@@ -1,7 +1,8 @@
 :root {
-  --grey-box-color: #3a3a3c;
+  --grey-box-color: #434344;
   --box-outline-color: #565758;
   --letter-white: #f8f8f8;
+  --box-expanded-color: #8c8d8d;
 }
 
 body {
@@ -50,7 +51,7 @@ body {
   margin: 5px;
 
   color: var(--letter-white);
-  font-size : 3em;
+  font-size: 3em;
   font-weight: bold;
 
   border: var(--box-outline-color) 2px solid;
@@ -59,5 +60,40 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  
+
+  transition: all 0.1s ease-in-out;
+}
+
+.letterBox.animate {
+  animation: expand 0.3s forwards;
+}
+.letterBox.animatereverse {
+  animation: animatereverse 0.3s forwards;
+}
+
+@keyframes expand {
+  0% {
+    transform: scale(1);
+    border: solid 2px var(--box-outline-color);
+  }
+  50% {
+    transform: scale(1.1);
+    border: solid 2px var(--box-expanded-color);
+  }
+  100% {
+    transform: scale(1);
+    border: solid 2px var(--box-expanded-color);
+  }
+}
+
+@keyframes animatereverse {
+  0% {
+    transform: scale(1);
+    border: solid 2px var(--box-expanded-color);
+  }
+
+  100% {
+    transform: scale(1);
+    border: solid 2px var(--box-outline-color);
+  }
 }
