@@ -1,5 +1,5 @@
 import { searchWord, chooseWord } from "./helpers/FindWord.js";
-import { animateKeyDown , animateBackspace } from "./helpers/Animations.js"
+import { animateKeyDown , animateBackspace , colorSquarePosition } from "./helpers/Animations.js"
 
 const alphabetCheckRegex = /^[a-zA-Z]+$/;
 
@@ -10,8 +10,10 @@ let letterCount = 0;
 
 //CHAR ARRAY
 let secretWord = chooseWord();
+console.log(secretWord);
 
 window.addEventListener("keydown", handleKeyPress);
+
 
 //TO-DO FOR CLEAN UP
 function handleKeyPress(event) {
@@ -107,16 +109,23 @@ function gameRunning() {
   return currentRow < 6;
 }
 
+function endGame() {
+  currentRow = 7;
+}
+
 function enterKeyHandler() {
   if (letterCount === 5 && currentRow <= 5 && gameRunning()) {
     console.log("Searching Word");
     searchWord(currentWord).then((wordExists) => {
       if (wordExists) {
         if (checkMatchingLetters(currentWord).includes(0, 1)) {
+          colorSquarePosition(checkMatchingLetters(currentWord) , currentRow)
           console.log(checkMatchingLetters(currentWord));
           moveToNextRow();
         } else {
+          colorSquarePosition(checkMatchingLetters(currentWord) , currentRow)
           console.log("CORRECT GUESS!!!!");
+          endGame();
         }
       }
     });
