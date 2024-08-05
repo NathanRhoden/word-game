@@ -1,7 +1,11 @@
 :root {
-  --grey-box-color: #3a3a3c;
+  --grey-box-color: #434344;
   --box-outline-color: #565758;
   --letter-white: #f8f8f8;
+  --box-expanded-color: #8c8d8d;
+  --box-solid-incorrect-grey: #3a3a3c;
+  --box-solid-correct-green: #538d4e;
+  --box-solid-mispositionyellow: #b59f3b;
 }
 
 body {
@@ -19,7 +23,7 @@ body {
   font-size-adjust: 0.45;
 }
 #letterGridContainer {
-  height: 40vh;
+  height: 32rem;
   width: 27rem;
 
   display: flex;
@@ -30,10 +34,7 @@ body {
 
   position: absolute;
   top: 10vh;
-
-  border: solid pink 3px;
 }
-
 .letterGridRow {
   height: 20%;
   width: 100%;
@@ -41,7 +42,6 @@ body {
   display: flex;
   flex-direction: row;
 
-  border: solid 1px cyan;
 }
 .letterBox {
   height: 85%;
@@ -50,7 +50,7 @@ body {
   margin: 5px;
 
   color: var(--letter-white);
-  font-size : 3em;
+  font-size: 3em;
   font-weight: bold;
 
   border: var(--box-outline-color) 2px solid;
@@ -59,5 +59,70 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  
+
+  transition: all 0.1s ease-in-out;
+}
+
+.letterBox.animate {
+  animation: expand 0.3s forwards;
+}
+.letterBox.colorGreen {
+  animation: colorSquareGreen 1s forwards;
+}
+.letterBox.colorYellow {
+  animation: colorSquareYellow 1s forwards;
+}
+.letterBox.colorGrey {
+  animation: colorSquareGrey 1s forwards;
+}
+
+@keyframes expand {
+  0% {
+    transform: scale(1);
+    border: solid 2px var(--box-outline-color);
+  }
+  50% {
+    transform: scale(1.1);
+    border: solid 2px var(--box-expanded-color);
+  }
+  100% {
+    transform: scale(1);
+    border: solid 2px var(--box-expanded-color);
+  }
+}
+
+@keyframes colorSquareGreen {
+  0% {
+    transform: scale(1);
+    background-color: #434344;
+  }
+
+  100% {
+    transform: scale(1);
+    background-color: var(--box-solid-correct-green);
+  }
+}
+
+@keyframes colorSquareYellow {
+  0% {
+    transform: scale(1);
+    background-color: #434344;
+  }
+
+  100% {
+    transform: scale(1);
+    background-color: var(--box-solid-mispositionyellow);
+  }
+}
+
+@keyframes colorSquareGrey {
+  0% {
+    transform: scale(1);
+    background-color: #434344;
+  }
+
+  100% {
+    transform: scale(1);
+    background-color: var(--box-solid-incorrect-grey);
+  }
 }
