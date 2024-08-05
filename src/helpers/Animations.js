@@ -16,18 +16,12 @@ function colorSquarePosition(matchingLetterArray, currentRow) {
     const currentSquare = document.getElementById(i + x[currentRow]);
     if (matchingLetterArray[i] == 1) {
       currentSquare.classList.add("colorYellow");
-    }
-    else if (matchingLetterArray[i] == 2) {
+    } else if (matchingLetterArray[i] == 2) {
       currentSquare.classList.add("colorGreen");
-    }
-    else {
+    } else {
       currentSquare.classList.add("colorGrey");
     }
-
   }
 }
 
-
 export { animateKeyDown, animateBackspace, colorSquarePosition };
-
-
