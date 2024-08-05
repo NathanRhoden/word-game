@@ -10,12 +10,9 @@ let letterCount = 0;
 
 //CHAR ARRAY
 let secretWord = chooseWord();
-console.log(secretWord);
 
 window.addEventListener("keydown", handleKeyPress);
 
-
-//TO-DO FOR CLEAN UP
 function handleKeyPress(event) {
   const keyPress = event.key;
 
