@@ -10,7 +10,7 @@ async function searchWord(word) {
     if (!response.ok) {
       return false;
     } else {
-      const json = await response.json();
+      const json = await response.json();  
       return true;
     }
   } catch (err) {
@@ -25,4 +25,20 @@ function chooseWord() {
   return word.split("");
 }
 
-export { searchWord, chooseWord };
+async function getDefinition(word) {
+  try {
+    const response = await fetch(url + word);
+
+    if (!response.ok) {
+      return false;
+    } else {
+      const json = await response.json(); 
+      console.log(json[0].meanings[0].definitions[0].definition);
+
+    }
+  } catch (err) {
+    console.error(err.message);
+  }
+}
+
+export { searchWord, chooseWord , getDefinition };

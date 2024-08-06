@@ -1,4 +1,4 @@
-import { searchWord, chooseWord } from "./helpers/FindWord.js";
+import { searchWord, chooseWord , getDefinition } from "./helpers/FindWord.js";
 import {
   animateKeyDown,
   animateBackspace,
@@ -14,6 +14,8 @@ let letterCount = 0;
 
 //CHAR ARRAY
 let secretWord = chooseWord();
+console.log(getDefinition(secretWord.toString().replaceAll(',' , '')));
+
 
 window.addEventListener("keydown", handleKeyPress);
 console.log(secretWord);
@@ -112,7 +114,7 @@ function gameRunning() {
 
 function displayCorrectWord() {
   const answerDiv = document.getElementById("ans");
-  answerDiv.innerHTML = secretWord.toString();
+  answerDiv.innerHTML = secretWord.toString().replaceAll(',' , '');
   answerDiv.classList.add("fadein");
 }
 
