@@ -1,5 +1,9 @@
-import { searchWord, chooseWord } from "./helpers/FindWord.js";
-import { animateKeyDown , animateBackspace , colorSquarePosition } from "./helpers/Animations.js"
+import { searchWord, chooseWord, getDefinition } from "./helpers/FindWord.js";
+import {
+  animateKeyDown,
+  animateBackspace,
+  colorSquarePosition,
+} from "./helpers/Animations.js";
 
 const alphabetCheckRegex = /^[a-zA-Z]+$/;
 
@@ -20,7 +24,6 @@ function handleKeyPress(event) {
     animateKeyDown(currentSquare);
     addLetterToGrid(currentSquare, keyPress);
     addLetterToWord(keyPress);
-    
   }
   if (keyPress == "Backspace") {
     if (currentSquare > 0 && letterCount > 0 && gameRunning()) {
@@ -37,7 +40,6 @@ function handleKeyPress(event) {
 function addLetterToWord(letter) {
   currentWord = currentWord.concat(letter.toUpperCase());
   letterCount++;
-  console.log(currentWord);
 }
 
 //DELETES LETTER
@@ -46,7 +48,6 @@ function removeLetterFromWord() {
   document.getElementById(currentSquare.toString()).innerHTML = " ";
   currentWord = currentWord.substring(0, currentWord.length - 1);
   letterCount--;
-  console.log(currentWord);
 }
 
 //MOVES GAME TO THE NEXT ROW
@@ -106,26 +107,28 @@ function gameRunning() {
   return currentRow < 6;
 }
 
-function endGame() {
-  currentRow = 7;
+function displayCorrectWord() {
+  const answerDiv = document.getElementById("ans");
+  answerDiv.innerHTML = secretWord.toString().replaceAll(",", "");
+  answerDiv.classList.add("fadein");
 }
 
 function enterKeyHandler() {
   if (letterCount === 5 && currentRow <= 5 && gameRunning()) {
-    console.log("Searching Word");
     searchWord(currentWord).then((wordExists) => {
       if (wordExists) {
         if (checkMatchingLetters(currentWord).includes(0, 1)) {
-          colorSquarePosition(checkMatchingLetters(currentWord) , currentRow)
-          console.log(checkMatchingLetters(currentWord));
-          moveToNextRow();
+          colorSquarePosition(checkMatchingLetters(currentWord), currentRow);
+          if (currentRow < 5) {
+            moveToNextRow();
+          } else {
+            displayCorrectWord();
+          }
         } else {
-          colorSquarePosition(checkMatchingLetters(currentWord) , currentRow)
-          console.log("CORRECT GUESS!!!!");
-          endGame();
+          colorSquarePosition(checkMatchingLetters(currentWord), currentRow);
+          displayCorrectWord();
         }
       }
     });
   }
 }
-

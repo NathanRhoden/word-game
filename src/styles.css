@@ -7,6 +7,7 @@
   --box-solid-correct-green: #538d4e;
   --box-solid-mispositionyellow: #b59f3b;
 }
+
 body {
   height: 100%;
   width: auto;
@@ -21,6 +22,7 @@ body {
   font-style: normal;
   font-size-adjust: 0.45;
 }
+
 #letterGridContainer {
   height: 32rem;
   width: 27rem;
@@ -32,8 +34,9 @@ body {
   align-items: stretch;
 
   position: absolute;
-  top: 10vh;
+  top: 20vh;
 }
+
 .letterGridRow {
   height: 20%;
   width: 100%;
@@ -42,6 +45,7 @@ body {
   flex-direction: row;
 
 }
+
 .letterBox {
   height: 85%;
   width: 20%;
@@ -65,14 +69,31 @@ body {
 .letterBox.animate {
   animation: expand 0.3s forwards;
 }
+
 .letterBox.colorGreen {
   animation: colorSquareGreen 1s forwards;
 }
+
 .letterBox.colorYellow {
   animation: colorSquareYellow 1s forwards;
 }
+
 .letterBox.colorGrey {
   animation: colorSquareGrey 1s forwards;
+}
+
+.answer.fadein {
+  position: relative;
+
+  top: 65vh;
+
+  color: var(--box-expanded-color);
+
+  font-size: 2.5rem;
+  font-weight: 400;
+  color: var(--letter-white);
+
+  animation: fadeIn 1s;
 }
 
 @keyframes expand {
@@ -80,10 +101,12 @@ body {
     transform: scale(1);
     border: solid 2px var(--box-outline-color);
   }
+
   50% {
     transform: scale(1.1);
     border: solid 2px var(--box-expanded-color);
   }
+
   100% {
     transform: scale(1);
     border: solid 2px var(--box-expanded-color);
@@ -123,5 +146,15 @@ body {
   100% {
     transform: scale(1);
     background-color: var(--box-solid-incorrect-grey);
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
   }
 }

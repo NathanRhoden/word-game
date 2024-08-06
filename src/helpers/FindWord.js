@@ -20,9 +20,24 @@ async function searchWord(word) {
 
 //FETCHES WORD FROM LIST -> CHAR ARRAY OF WORD
 function chooseWord() {
-  let word = words[Math.floor(Math.random() * 11513)].toUpperCase();
+  let word = words[Math.floor(Math.random() * words.length)].toUpperCase();
 
   return word.split("");
 }
 
-export { searchWord, chooseWord };
+async function getDefinition(word) {
+  try {
+    const response = await fetch(url + word);
+
+    if (!response.ok) {
+      return false;
+    } else {
+      const json = await response.json();
+      console.log(json[0].meanings[0].definitions[0].definition);
+    }
+  } catch (err) {
+    console.error(err.message);
+  }
+}
+
+export { searchWord, chooseWord, getDefinition };
