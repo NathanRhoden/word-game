@@ -20,7 +20,7 @@ async function searchWord(word) {
 
 //FETCHES WORD FROM LIST -> CHAR ARRAY OF WORD
 function chooseWord() {
-  let word = words[Math.floor(Math.random() * 11513)].toUpperCase();
+  let word = words[Math.floor(Math.random() * words.length)].toUpperCase();
 
   return word.split("");
 }

@@ -75,6 +75,15 @@ body {
   animation: colorSquareGrey 1s forwards;
 }
 
+.answer.fadein{
+  position: absolute;
+  top : 45em;
+  color: var(--box-expanded-color);
+
+  animation: fadeIn 1s;
+}
+
+
 @keyframes expand {
   0% {
     transform: scale(1);
@@ -124,4 +133,9 @@ body {
     transform: scale(1);
     background-color: var(--box-solid-incorrect-grey);
   }
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
 }
