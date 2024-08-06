@@ -1,4 +1,4 @@
-import { searchWord, chooseWord , getDefinition } from "./helpers/FindWord.js";
+import { searchWord, chooseWord, getDefinition } from "./helpers/FindWord.js";
 import {
   animateKeyDown,
   animateBackspace,
@@ -14,11 +14,8 @@ let letterCount = 0;
 
 //CHAR ARRAY
 let secretWord = chooseWord();
-console.log(getDefinition(secretWord.toString().replaceAll(',' , '')));
-
 
 window.addEventListener("keydown", handleKeyPress);
-console.log(secretWord);
 
 function handleKeyPress(event) {
   const keyPress = event.key;
@@ -43,7 +40,6 @@ function handleKeyPress(event) {
 function addLetterToWord(letter) {
   currentWord = currentWord.concat(letter.toUpperCase());
   letterCount++;
-  console.log(currentWord);
 }
 
 //DELETES LETTER
@@ -52,7 +48,6 @@ function removeLetterFromWord() {
   document.getElementById(currentSquare.toString()).innerHTML = " ";
   currentWord = currentWord.substring(0, currentWord.length - 1);
   letterCount--;
-  console.log(currentWord);
 }
 
 //MOVES GAME TO THE NEXT ROW
@@ -114,13 +109,11 @@ function gameRunning() {
 
 function displayCorrectWord() {
   const answerDiv = document.getElementById("ans");
-  answerDiv.innerHTML = secretWord.toString().replaceAll(',' , '');
+  answerDiv.innerHTML = secretWord.toString().replaceAll(",", "");
   answerDiv.classList.add("fadein");
 }
 
 function enterKeyHandler() {
-  console.log(currentRow + " row");
-
   if (letterCount === 5 && currentRow <= 5 && gameRunning()) {
     searchWord(currentWord).then((wordExists) => {
       if (wordExists) {
